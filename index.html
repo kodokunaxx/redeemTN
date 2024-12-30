@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Submission Tool</title>
+    <link rel="stylesheet" href="src/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Code Submission Tool</h1>
+
+        <!-- Input for codes -->
+        <div class="section">
+            <label for="code-input">Nhập code tại đây:</label>
+            <textarea id="code-input" rows="2" placeholder="Nhập code..."></textarea>
+        </div>
+
+        <!-- Account table -->
+        <div class="section">
+            <label for="account-table">Danh sách tài khoản:</label>
+            <table id="account-table">
+                <thead>
+                    <tr>
+                        <th class="checkbox-cell">
+                            <input type="checkbox" id="select-all" checked>
+                        </th>
+                        <th class="fit-content">Tên Tài Khoản</th>
+                        <th class="w-200px">ID Tài Khoản</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Submit codes -->
+        <div class="section">
+            <button id="submit-code-btn">Submit Code</button>
+            <textarea id="response-output" rows="5" readonly></textarea>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="src/script.js"></script>
+</body>
+</html>
