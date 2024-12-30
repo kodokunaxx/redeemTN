@@ -102,9 +102,9 @@ document.addEventListener("DOMContentLoaded", () => {
                             }
                         );
 
-                        responseOutput.value += `[*] Success: Code ${code} redeemed for ${account.roleName} - Status: ${result.status}\n`;
+                        responseOutput.value += `[*] Success: Code ${code} redeemed for ${account.roleName} - Status: ${result?.status}\n`;
                     } catch (error) {
-                        responseOutput.value += `[*] Error: Failed to redeem code ${code} for ${account.roleName} - Status: ${error.response?.data}\n`;
+                        responseOutput.value += `[*] Error: Failed to redeem code ${code} for ${account.roleName} - Status: ${error.response?.data?.message}\n`;
                     }
                 }
             }
