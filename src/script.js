@@ -1,3 +1,14 @@
+// Mở popup khi nhấn nút Show
+document.getElementById('show-instructions').addEventListener('click', function() {
+    document.getElementById('instruction-popup').style.display = 'flex';
+});
+
+// Đóng popup khi nhấn nút X
+document.getElementById('close-popup').addEventListener('click', function() {
+    document.getElementById('instruction-popup').style.display = 'none';
+});
+
+
 document.addEventListener("DOMContentLoaded", () => {
     const accountTableBody = document.querySelector("#account-table tbody");
     const selectAllCheckbox = document.getElementById("select-all");
@@ -118,6 +129,6 @@ document.addEventListener("DOMContentLoaded", () => {
             console.error("Error redeeming codes:", error);
         }
     });
-
+    
     fetchAccounts();
 });
