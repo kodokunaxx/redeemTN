@@ -16,6 +16,9 @@ document.addEventListener("DOMContentLoaded", () => {
             console.error("Failed to load accounts:", error);
         }
     }
+    function delay(ms) {
+      return new Promise((resolve) => setTimeout(resolve, ms));
+    }
 
     function populateAccountTable(accounts) {
         accountTableBody.innerHTML = "";
@@ -107,6 +110,9 @@ document.addEventListener("DOMContentLoaded", () => {
                         responseOutput.value += `[*] Error: Failed to redeem code ${code} for ${account.roleName} - Status: ${error.response?.data?.message}\n`;
                     }
                 }
+
+                // Wait 2 seconds before continuing the loop
+                await delay(1000);
             }
         } catch (error) {
             console.error("Error redeeming codes:", error);
