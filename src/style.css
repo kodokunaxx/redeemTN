@@ -193,3 +193,7 @@ textarea[readonly] {
     height: auto;
     margin-top: 10px;
 }
+
+.notify{
+    margin-bottom: 10px;
+}

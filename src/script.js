@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const selectedCheckboxes = Array.from(accountTableBody.querySelectorAll("input[type=checkbox]:checked"));
 
         if (!codes.length || !selectedCheckboxes.length) {
-            alert("Please input codes and select at least one account.");
+            alert("Vui lòng nhập code và chọn ít nhất một acc để nhập code.");
             return;
         }
 
