@@ -144,7 +144,7 @@ textarea[readonly] {
     justify-content: center;
     align-items: center;
     vertical-align: middle;
-    padding: 5%;
+    padding: 5% 15%;
 }
 
 .popup-content {
