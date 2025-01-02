@@ -90,9 +90,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 for (const code of codes) {
                     try {
+                        account.code = code.toUpperCase();
                         const result = await axios.post(
                             "https://vgrapi-sea.vnggames.com/coordinator/api/v1/code/redeem",
-                            { ...account, code },
+                            account,
                             {
                                 headers: {
                                     accept: "application/json, text/plain, */*",
