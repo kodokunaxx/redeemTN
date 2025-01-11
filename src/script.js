@@ -160,10 +160,12 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         try {
-            const fixRoleIds = ["2616804012", "3087504012", "3753304012"];
+          const fixRoleIds = ["2616804012", "3087504012", "3753304012"];
           const param = {
             milestoneId: fixRoleIds.includes(account.roleId) ? 2 : 1,
-            promotionId: fixRoleIds.includes(account.roleId) ? "1324472005604435595" : "1324472008825699833",
+            promotionId: fixRoleIds.includes(account.roleId)
+              ? "1324472005604435595"
+              : "1324472008825699833",
             roleId: account.roleId,
             serverId: account.serverId,
           };
@@ -175,7 +177,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 accept: "application/json, text/plain, */*",
                 "accept-language": "vi-VN",
                 authorization:
-                  "L3lpYjFCZE5ybElnWW4zZmRDc2Y5S21oNjM0VzdRN2xEMEQwWjQycEZMUT1HRkV4SDBUIWgyQCMpdThmMVFwVjJ4T0R0ZVlFQGdsdnptQ1R4TUd5UHhnV1VjeW1ESlJDcXlTUGRlZGNBMERGdnVpWWxWIS1CYXdVVyhobUEyQEIrMTMyNzY3OTY4MTc5NzY4MTE1Mg==",
+                  "MWNYdXVTd3JXMUNFYWxzekptbithbzlaNVdDcjJWdnVnQ1NmV2l3dzZNND1TMEZPKHp4UUo1YTIwQDZrcmJaQlQwUGZXb1g2d2UxYk0wbTY1V3N4bGF3WE9sUkB3dlYtb1B3YjUqeSFseVpYRShtdmV4aF9ydiQ2QGsxLTlANEwrMTMyNzY4Njg5MjY3MDI4Mzc3Ng==",
                 "content-type": "application/json",
                 priority: "u=1, i",
                 "sec-ch-ua":
@@ -186,7 +188,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 "sec-fetch-mode": "cors",
                 "sec-fetch-site": "same-site",
                 "x-client-region": "VN",
-                "x-request-id": "dccbac10-6012-4477-9d07-ed454187ec23",
+                "x-request-id": "b2275955-64d7-4e03-9b1e-9c94eff37839",
+                Referer: "https://club.vnggames.com/",
+                "Referrer-Policy": "origin-when-cross-origin",
               },
             }
           );
