@@ -177,7 +177,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 accept: "application/json, text/plain, */*",
                 "accept-language": "vi-VN",
                 authorization:
-                  "MWNYdXVTd3JXMUNFYWxzekptbithbzlaNVdDcjJWdnVnQ1NmV2l3dzZNND1TMEZPKHp4UUo1YTIwQDZrcmJaQlQwUGZXb1g2d2UxYk0wbTY1V3N4bGF3WE9sUkB3dlYtb1B3YjUqeSFseVpYRShtdmV4aF9ydiQ2QGsxLTlANEwrMTMyNzY4Njg5MjY3MDI4Mzc3Ng==",
+                  "alUxYlBIWXFJcDdHNzk1NHdOeHRZYXFtakNIVnlHeTFpczV5WHF0QkYrND1BWllYIzZpemokM0hPME4yMmZnQEozblNLeUBVR1MwLV9lQ0lzdyl2bzE5elZnVSQ2WE0jZ0cwQVU4cVVaaC0wYXRrUDE1IVNxM1JJNFVTQXQ4WHgrMTMyOTEzMDgwMzIyOTk3NDUyOA==",
                 "content-type": "application/json",
                 priority: "u=1, i",
                 "sec-ch-ua":
