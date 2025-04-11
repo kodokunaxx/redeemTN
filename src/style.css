@@ -227,3 +227,76 @@ textarea[readonly] {
 .account-header label {
     margin: 0;
 }
+
+.accounts-scroll-container {
+    width: 100%;
+    overflow-x: auto;
+    margin-bottom: 10px;
+}
+
+#accounts-grid {
+    display: flex;
+    gap: 20px;
+    min-width: min-content;
+}
+
+.account-column {
+    width: 250px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px;
+    background: #f8f8f8;
+}
+
+.account-item {
+    display: grid;
+    grid-template-columns: auto 30px;
+    gap: 10px;
+    align-items: center;
+    padding: 8px;
+    background: white;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    margin-bottom: 8px;
+}
+
+.account-item:last-child {
+    margin-bottom: 0;
+}
+
+.account-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.account-name, .account-id {
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.account-checkbox {
+    width: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.select-all-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.select-all-container input[type="checkbox"] {
+    width: auto;
+    margin: 0;
+}
+
+.select-all-container label {
+    margin: 0;
+    font-weight: normal;
+    cursor: pointer;
+}

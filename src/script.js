@@ -10,7 +10,7 @@ document.getElementById('close-popup').addEventListener('click', function() {
 
 
 document.addEventListener("DOMContentLoaded", () => {
-    const accountTableBody = document.querySelector("#account-table tbody");
+    const accountsGrid = document.getElementById('accounts-grid');
     const selectAllCheckbox = document.getElementById("select-all");
     const submitCodeBtn = document.getElementById("submit-code-btn");
     const codeInput = document.getElementById("code-input");
@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const mainAccRadio = document.getElementById("main-acc");
     const cloneAccRadio = document.getElementById("clone-acc");
 
-    let currentFilePath = "./src/account.json";
+    let currentFilePath = "./src/acc_main.json";
 
     async function fetchAccounts() {
         try {
@@ -27,20 +27,21 @@ document.addEventListener("DOMContentLoaded", () => {
             populateAccountTable(accounts);
         } catch (error) {
             console.error("Failed to load accounts:", error);
+            responseOutput.value += `[*] Error: Failed to load accounts from ${currentFilePath}\n`;
         }
     }
 
     // Add event listeners for radio buttons
     mainAccRadio.addEventListener("change", () => {
         if (mainAccRadio.checked) {
-            currentFilePath = "./src/account.json";
+            currentFilePath = "./src/acc_main.json";
             fetchAccounts();
         }
     });
 
     cloneAccRadio.addEventListener("change", () => {
         if (cloneAccRadio.checked) {
-            currentFilePath = "./src/clone.json";
+            currentFilePath = "./src/acc_clone.json";
             fetchAccounts();
         }
     });
@@ -50,36 +51,56 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function populateAccountTable(accounts) {
-        accountTableBody.innerHTML = "";
-        accounts.forEach(account => {
-            const row = document.createElement("tr");
-    
-            const checkboxCell = document.createElement("td");
-            checkboxCell.classList.add("checkbox-cell"); 
-            const checkbox = document.createElement("input");
-            checkbox.type = "checkbox";
-            checkbox.value = account.roleId;
-            checkbox.checked = true;
-            checkboxCell.appendChild(checkbox);
-            row.appendChild(checkboxCell);
-    
-            const nameCell = document.createElement("td");
-            nameCell.classList.add("fit-content");  
-            nameCell.textContent = account.roleName;
-            row.appendChild(nameCell);
-    
-            const idCell = document.createElement("td");
-            idCell.classList.add("w-200px"); 
-            idCell.textContent = account.roleId;
-            row.appendChild(idCell);
-    
-            accountTableBody.appendChild(row);
-        });
+        accountsGrid.innerHTML = "";
+        
+        // Tính số lượng cột cần thiết (mỗi cột chứa tối đa 3 account)
+        const columnsNeeded = Math.ceil(accounts.length / 3);
+        
+        // Tạo các cột
+        for (let i = 0; i < columnsNeeded; i++) {
+            const column = document.createElement('div');
+            column.className = 'account-column';
+            
+            // Lấy 3 account cho mỗi cột
+            const startIndex = i * 3;
+            const columnAccounts = accounts.slice(startIndex, startIndex + 3);
+            
+            // Thêm accounts vào cột
+            columnAccounts.forEach(account => {
+                const accountItem = document.createElement('div');
+                accountItem.className = 'account-item';
+                
+                const accountInfo = document.createElement('div');
+                accountInfo.className = 'account-info';
+                
+                const nameDiv = document.createElement('div');
+                nameDiv.className = 'account-name';
+                nameDiv.textContent = account.roleName;
+                
+                const idDiv = document.createElement('div');
+                idDiv.className = 'account-id';
+                idDiv.textContent = account.roleId;
+                
+                accountInfo.appendChild(nameDiv);
+                accountInfo.appendChild(idDiv);
+                
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.className = 'account-checkbox';
+                checkbox.value = account.roleId;
+                checkbox.checked = true;
+                
+                accountItem.appendChild(accountInfo);
+                accountItem.appendChild(checkbox);
+                column.appendChild(accountItem);
+            });
+            
+            accountsGrid.appendChild(column);
+        }
     }
-    
 
     selectAllCheckbox.addEventListener("change", () => {
-        const checkboxes = accountTableBody.querySelectorAll("input[type=checkbox]");
+        const checkboxes = document.querySelectorAll(".account-checkbox");
         checkboxes.forEach(checkbox => {
             checkbox.checked = selectAllCheckbox.checked;
         });
@@ -87,7 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     submitCodeBtn.addEventListener("click", async () => {
         const codes = codeInput.value.split(/[\s,]+/).map(code => code.trim()).filter(Boolean);
-        const selectedCheckboxes = Array.from(accountTableBody.querySelectorAll("input[type=checkbox]:checked"));
+        const selectedCheckboxes = Array.from(document.querySelectorAll(".account-checkbox:checked"));
 
         if (!codes.length || !selectedCheckboxes.length) {
             alert("Vui lòng nhập code và chọn ít nhất một acc để nhập code.");

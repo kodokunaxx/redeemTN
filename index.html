@@ -22,10 +22,10 @@
             <textarea id="code-input" rows="2" placeholder="Nhập code, mỗi code cách nhau dấu phẩy... "></textarea>
         </div>
 
-        <!-- Account table -->
+        <!-- Account section -->
         <div class="section">
             <div class="account-header">
-                <label for="account-table">Danh sách tài khoản:</label>
+                <label for="account-container">Danh sách tài khoản:</label>
                 <div class="radio-group">
                     <input type="radio" id="main-acc" name="account-type" value="main" checked>
                     <label for="main-acc">Acc chính</label>
@@ -33,19 +33,15 @@
                     <label for="clone-acc">Clone</label>
                 </div>
             </div>
-            <table id="account-table">
-                <thead>
-                    <tr>
-                        <th class="checkbox-cell">
-                            <input type="checkbox" id="select-all" checked>
-                        </th>
-                        <th class="fit-content">Tên Tài Khoản</th>
-                        <th class="w-200px">ID Tài Khoản</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
+            <div class="select-all-container">
+                <input type="checkbox" id="select-all" checked>
+                <label for="select-all">Chọn tất cả</label>
+            </div>
+            <div class="accounts-scroll-container">
+                <div id="accounts-grid">
+                    <!-- Grid content will be populated by JavaScript -->
+                </div>
+            </div>
         </div>
 
         <!-- Submit codes -->
