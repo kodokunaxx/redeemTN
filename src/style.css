@@ -39,7 +39,9 @@ label {
     font-weight: bold;
 }
 
-textarea, select, input {
+#code-input {
+    resize: vertical;
+    min-height: 50px; /* Chiều cao tối thiểu cho 2 dòng */
     width: 100%;
     padding: 10px;
     margin-bottom: 10px;
@@ -299,4 +301,21 @@ textarea[readonly] {
     margin: 0;
     font-weight: normal;
     cursor: pointer;
+}
+
+.response-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.response-grid textarea {
+    resize: none;
+    height: 400px;
+    margin: 0;
+    font-family: monospace;
+    font-size: 12px;
+    white-space: pre;
+    overflow-x: auto;
 }

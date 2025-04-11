@@ -11,14 +11,46 @@ document.addEventListener("DOMContentLoaded", () => {
     const selectAllCheckbox = document.getElementById("select-all");
     const submitCodeBtn = document.getElementById("submit-code-btn");
     const codeInput = document.getElementById("code-input");
-    const responseOutput = document.getElementById("response-output");
+    const responseOutputs = [
+        document.getElementById("response-output-1"),
+        document.getElementById("response-output-2"),
+        document.getElementById("response-output-3")
+    ];
     const mainAccRadio = document.getElementById("main-acc");
     const cloneAccRadio = document.getElementById("clone-acc");
 
     let currentFilePath = "./src/acc_main.json";
+    let currentOutputIndex = 0;
 
     function delay(ms) {
         return new Promise((resolve) => setTimeout(resolve, ms));
+    }
+
+    function clearAllOutputs() {
+        responseOutputs.forEach(output => output.value = '');
+        currentOutputIndex = 0;
+    }
+
+    function appendToOutput(text) {
+        // Chọn textarea hiện tại
+        const currentOutput = responseOutputs[currentOutputIndex];
+        
+        // Đếm số dòng hiện tại
+        const currentLines = currentOutput.value.split('\n').filter(line => line.trim()).length;
+        
+        // Nếu đã đạt đến 20 dòng
+        if (currentLines >= 20) {
+            // Chuyển sang textarea tiếp theo
+            currentOutputIndex = (currentOutputIndex + 1) % 3;
+            // Nếu đã quay vòng lại từ đầu, xóa hết để bắt đầu lại
+            if (currentOutputIndex === 0) {
+                clearAllOutputs();
+            }
+            responseOutputs[currentOutputIndex].value = text + '\n';
+        } else {
+            // Thêm text vào dòng mới
+            currentOutput.value = currentOutput.value + text + '\n';
+        }
     }
 
     function updateSelectAllState() {
@@ -67,7 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
             populateAccountGrid(accounts);
         } catch (error) {
             console.error("Failed to load accounts:", error);
-            responseOutput.value += `[*] Error: Failed to load accounts from ${currentFilePath}\n`;
+            appendToOutput(`[*] Error: Failed to load accounts from ${currentFilePath}`);
         }
     }
 
@@ -100,6 +132,9 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
+        // Clear all outputs before starting new submission
+        clearAllOutputs();
+
         try {
             const response = await fetch(currentFilePath);
             const accounts = await response.json();
@@ -107,7 +142,7 @@ document.addEventListener("DOMContentLoaded", () => {
             for (const checkbox of selectedCheckboxes) {
                 const account = accounts.find(acc => acc.roleId === checkbox.value);
                 if (!account) {
-                    responseOutput.value += `Error: Account with ID ${checkbox.value} not found.\n`;
+                    appendToOutput(`Error: Account with ID ${checkbox.value} not found.`);
                     continue;
                 }
 
@@ -137,15 +172,16 @@ document.addEventListener("DOMContentLoaded", () => {
                                 },
                             }
                         );
-                        responseOutput.value += `[*] Success: ${account.roleName} \t-\t Status: ${result?.status}\n`;
+                        appendToOutput(`[*] Success: ${account.roleName} \t\t Response: ${result?.status}`);
                     } catch (error) {
-                        responseOutput.value += `[*] Error: ${account.roleName} \t-\t Status: ${error.response?.data?.message}\n`;
+                        appendToOutput(`[*] Error: ${account.roleName} \t\t Response: ${error.response?.data?.message}`);
                     }
                 }
                 await delay(1000);
             }
         } catch (error) {
             console.error("Error:", error);
+            appendToOutput("Error occurred while processing request");
         }
     });
     
