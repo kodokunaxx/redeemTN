@@ -15,18 +15,36 @@ document.addEventListener("DOMContentLoaded", () => {
     const submitCodeBtn = document.getElementById("submit-code-btn");
     const codeInput = document.getElementById("code-input");
     const responseOutput = document.getElementById("response-output");
+    const mainAccRadio = document.getElementById("main-acc");
+    const cloneAccRadio = document.getElementById("clone-acc");
 
-    const accountsFilePath = "./src/account.json";
+    let currentFilePath = "./src/account.json";
 
     async function fetchAccounts() {
         try {
-            const response = await fetch(accountsFilePath);
+            const response = await fetch(currentFilePath);
             const accounts = await response.json();
             populateAccountTable(accounts);
         } catch (error) {
             console.error("Failed to load accounts:", error);
         }
     }
+
+    // Add event listeners for radio buttons
+    mainAccRadio.addEventListener("change", () => {
+        if (mainAccRadio.checked) {
+            currentFilePath = "./src/account.json";
+            fetchAccounts();
+        }
+    });
+
+    cloneAccRadio.addEventListener("change", () => {
+        if (cloneAccRadio.checked) {
+            currentFilePath = "./src/clone.json";
+            fetchAccounts();
+        }
+    });
+
     function delay(ms) {
       return new Promise((resolve) => setTimeout(resolve, ms));
     }
@@ -77,7 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         try {
-            const response = await fetch(accountsFilePath);
+            const response = await fetch(currentFilePath);
             const accounts = await response.json();
 
             for (const checkbox of selectedCheckboxes) {

@@ -24,7 +24,15 @@
 
         <!-- Account table -->
         <div class="section">
-            <label for="account-table">Danh sách tài khoản:</label>
+            <div class="account-header">
+                <label for="account-table">Danh sách tài khoản:</label>
+                <div class="radio-group">
+                    <input type="radio" id="main-acc" name="account-type" value="main" checked>
+                    <label for="main-acc">Acc chính</label>
+                    <input type="radio" id="clone-acc" name="account-type" value="clone">
+                    <label for="clone-acc">Clone</label>
+                </div>
+            </div>
             <table id="account-table">
                 <thead>
                     <tr>
@@ -44,7 +52,7 @@
         <div class="section">
             <button id="submit-code-btn">Submit Code</button>
             <div class="notify"><i>(*) Chú ý: Acc nào chạy mà có <b>Status: 200</b> tức là chạy thành công, acc nào khác 200 thì là <b>lỗi truy cập quá nhiều lần / code không tồn tại / code đã được nhập</b>, chi tiết xem phần log bên dưới để lựa chọn acc cần chạy lại code</i></div>
-            <textarea id="response-output" rows="5" readonly></textarea>
+            <textarea id="response-output" rows="20" readonly></textarea>
         </div>
 
         <!-- Popup hướng dẫn -->

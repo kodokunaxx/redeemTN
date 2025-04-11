@@ -1,93 +1,51 @@
 [
-    {
-      "code": "",
-      "gameCode": "934",
-      "level": "",
-      "profileId": "3e77801bf2791981",
-      "roleId": "2616804012",
-      "roleName": "Cihi_",
-      "serverId": "4012",
-      "userId": "1040928903901782016"
-    },
-    {
-      "code": "",
-      "gameCode": "934",
-      "level": "",
-      "profileId": "3e07d3557bca5981",
-      "roleId": "3087504012",
-      "roleName": "Ciha_",
-      "serverId": "4012",
-      "userId": "1616966668218662912"
-    },
-    {
-      "userId": "1556186233176195072",
-      "profileId": "318d3aa16e5b2981",
-      "serverId": "4012",
-      "gameCode": "934",
-      "roleId": "3753304012",
-      "roleName": "ßờɱシ",
-      "level": "",
-      "code": ""
-    },
-    {
-      "userId": "3038937773348577280",
-      "profileId": "30e3c231b75ca981",
-      "serverId": "4012",
-      "gameCode": "934",
-      "roleId": "3156004012",
-      "roleName": "$.BỜM.$",
-      "level": "",
-      "code": ""
-    },
-    {
-      "code": "",
-      "gameCode": "934",
-      "level": "",
-      "profileId": "30159af501638981",
-      "roleId": "10125404012",
-      "roleName": "NhịLangThần_",
-      "serverId": "4012",
-      "userId": "3087518536434491392"
-    },
-    {
-      "userId": "3087524766979244032",
-      "profileId": "30159b94f3e38981",
-      "serverId": "4012",
-      "gameCode": "934",
-      "roleId": "10125704012",
-      "roleName": "BạchDiện_",
-      "level": "",
-      "code": ""
-    },
-    {
-      "userId": "3087528148438876160",
-      "profileId": "3015987ad1238981",
-      "serverId": "4012",
-      "gameCode": "934",
-      "roleId": "10119404012",
-      "roleName": "BạchHạc_",
-      "level": "",
-      "code": ""
-    },
-    {
-      "userId": "3087532551986520064",
-      "profileId": "30159826f8638981",
-      "serverId": "4012",
-      "gameCode": "934",
-      "roleId": "10119604012",
-      "roleName": "ThỏNgọc_",
-      "level": "",
-      "code": ""
-    },
-    {
-      "userId": "3087535864110948352",
-      "profileId": "301599edb020c981",
-      "serverId": "4012",
-      "gameCode": "934",
-      "roleId": "10120004012",
-      "roleName": "KhổngTước_",
-      "level": "",
-      "code": ""
-    }
-  ]
-  
+  {
+    "userId": "1040928903901782016",
+    "profileId": "3e77801bf2791981",
+    "serverId": "4012",
+    "gameCode": "934",
+    "roleId": "2616804012",
+    "roleName": "Cihi_",
+    "level": "",
+    "code": ""
+  },
+  {
+    "userId": "1616966668218662912",
+    "profileId": "3e07d3557bca5981",
+    "serverId": "4012",
+    "gameCode": "934",
+    "roleId": "3087504012",
+    "roleName": "Ciha_",
+    "level": "",
+    "code": ""
+  },
+  {
+    "userId": "1556186233176195072",
+    "profileId": "318d3aa16e5b2981",
+    "serverId": "4012",
+    "gameCode": "934",
+    "roleId": "3753304012",
+    "roleName": "ßờɱシ",
+    "level": "",
+    "code": ""
+  },
+  {
+    "userId":"3038608764263391232",
+    "profileId":"30e2b995e01ca981",
+    "serverId":"4012",
+    "gameCode":"934",
+    "roleId":"2685404012",
+    "roleName":"Pudding_",
+    "level":"",
+    "code":""
+  },
+  {"userId":"3038193870510235648",
+  "profileId":"30e27d41e0404981",
+  "serverId":"4012",
+  "gameCode":"934",
+  "roleId":"2023804012",
+  "roleName":"Tiểu Yêu.",
+  "level":"",
+  "code":""
+}
+]

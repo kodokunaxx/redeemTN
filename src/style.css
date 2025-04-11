@@ -7,7 +7,7 @@ body {
 }
 
 .container {
-    max-width: 800px;
+    max-width: 1200px;
     margin: 20px auto;
     padding: 20px;
     background: #fff;
@@ -196,4 +196,34 @@ textarea[readonly] {
 
 .notify{
     margin-bottom: 10px;
+}
+
+.radio-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.radio-group input[type="radio"] {
+    margin: 0;
+    width: auto;
+    cursor: pointer;
+}
+
+.radio-group label {
+    margin: 0;
+    cursor: pointer;
+    display: inline;
+    font-weight: normal;
+}
+
+.account-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+.account-header label {
+    margin: 0;
 }
