@@ -1,13 +1,10 @@
-// Mở popup khi nhấn nút Show
-document.getElementById('show-instructions').addEventListener('click', function() {
-    document.getElementById('instruction-popup').style.display = 'flex';
+document.addEventListener('click', (e) => {
+    if (e.target.id === 'show-instructions') {
+        document.getElementById('instruction-popup').style.display = 'flex';
+    } else if (e.target.id === 'close-popup') {
+        document.getElementById('instruction-popup').style.display = 'none';
+    }
 });
-
-// Đóng popup khi nhấn nút X
-document.getElementById('close-popup').addEventListener('click', function() {
-    document.getElementById('instruction-popup').style.display = 'none';
-});
-
 
 document.addEventListener("DOMContentLoaded", () => {
     const accountsGrid = document.getElementById('accounts-grid');
@@ -20,18 +17,60 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let currentFilePath = "./src/acc_main.json";
 
+    function delay(ms) {
+        return new Promise((resolve) => setTimeout(resolve, ms));
+    }
+
+    function updateSelectAllState() {
+        const checkboxes = document.querySelectorAll(".account-checkbox");
+        const allChecked = Array.from(checkboxes).every(cb => cb.checked);
+        selectAllCheckbox.checked = allChecked;
+    }
+
+    function populateAccountGrid(accounts) {
+        accountsGrid.innerHTML = "";
+        const columnsNeeded = Math.ceil(accounts.length / 3);
+        
+        for (let i = 0; i < columnsNeeded; i++) {
+            const column = document.createElement('div');
+            column.className = 'account-column';
+            
+            accounts.slice(i * 3, (i + 1) * 3).forEach(account => {
+                const accountItem = document.createElement('div');
+                accountItem.className = 'account-item';
+                
+                accountItem.innerHTML = `
+                    <div class="account-info">
+                        <div class="account-name">${account.roleName}</div>
+                        <div class="account-id">${account.roleId}</div>
+                    </div>
+                    <input type="checkbox" class="account-checkbox" value="${account.roleId}" checked>
+                `;
+                
+                const checkbox = accountItem.querySelector('.account-checkbox');
+                checkbox.addEventListener('change', updateSelectAllState);
+                
+                column.appendChild(accountItem);
+            });
+            
+            accountsGrid.appendChild(column);
+        }
+        
+        // Cập nhật trạng thái ban đầu của Select All
+        updateSelectAllState();
+    }
+
     async function fetchAccounts() {
         try {
             const response = await fetch(currentFilePath);
             const accounts = await response.json();
-            populateAccountTable(accounts);
+            populateAccountGrid(accounts);
         } catch (error) {
             console.error("Failed to load accounts:", error);
             responseOutput.value += `[*] Error: Failed to load accounts from ${currentFilePath}\n`;
         }
     }
 
-    // Add event listeners for radio buttons
     mainAccRadio.addEventListener("change", () => {
         if (mainAccRadio.checked) {
             currentFilePath = "./src/acc_main.json";
@@ -46,62 +85,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    function delay(ms) {
-      return new Promise((resolve) => setTimeout(resolve, ms));
-    }
-
-    function populateAccountTable(accounts) {
-        accountsGrid.innerHTML = "";
-        
-        // Tính số lượng cột cần thiết (mỗi cột chứa tối đa 3 account)
-        const columnsNeeded = Math.ceil(accounts.length / 3);
-        
-        // Tạo các cột
-        for (let i = 0; i < columnsNeeded; i++) {
-            const column = document.createElement('div');
-            column.className = 'account-column';
-            
-            // Lấy 3 account cho mỗi cột
-            const startIndex = i * 3;
-            const columnAccounts = accounts.slice(startIndex, startIndex + 3);
-            
-            // Thêm accounts vào cột
-            columnAccounts.forEach(account => {
-                const accountItem = document.createElement('div');
-                accountItem.className = 'account-item';
-                
-                const accountInfo = document.createElement('div');
-                accountInfo.className = 'account-info';
-                
-                const nameDiv = document.createElement('div');
-                nameDiv.className = 'account-name';
-                nameDiv.textContent = account.roleName;
-                
-                const idDiv = document.createElement('div');
-                idDiv.className = 'account-id';
-                idDiv.textContent = account.roleId;
-                
-                accountInfo.appendChild(nameDiv);
-                accountInfo.appendChild(idDiv);
-                
-                const checkbox = document.createElement('input');
-                checkbox.type = 'checkbox';
-                checkbox.className = 'account-checkbox';
-                checkbox.value = account.roleId;
-                checkbox.checked = true;
-                
-                accountItem.appendChild(accountInfo);
-                accountItem.appendChild(checkbox);
-                column.appendChild(accountItem);
-            });
-            
-            accountsGrid.appendChild(column);
-        }
-    }
-
     selectAllCheckbox.addEventListener("change", () => {
-        const checkboxes = document.querySelectorAll(".account-checkbox");
-        checkboxes.forEach(checkbox => {
+        document.querySelectorAll(".account-checkbox").forEach(checkbox => {
             checkbox.checked = selectAllCheckbox.checked;
         });
     });
@@ -121,7 +106,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
             for (const checkbox of selectedCheckboxes) {
                 const account = accounts.find(acc => acc.roleId === checkbox.value);
-
                 if (!account) {
                     responseOutput.value += `Error: Account with ID ${checkbox.value} not found.\n`;
                     continue;
@@ -137,12 +121,10 @@ document.addEventListener("DOMContentLoaded", () => {
                                 headers: {
                                     accept: "application/json, text/plain, */*",
                                     "accept-language": "vi,en-US;q=0.9,en;q=0.8",
-                                    authorization:
-                                      "bG1aMmp2dU9pMW1ndGdrcktRQ29QbVVwVDBnUmNQdFI4THJkbE84U0tkMD1uTk5Ycm81eENxWk44aHc2ZkxYLTRqUDFIKVptVGlNOWtwWU1wVmpZSGpjemRWZ0wzUFhsJHlFQUp4KkJyI0lPOHBrYU9HJEZSQWNhKXZlaTFoeXcrMTI3NzU5NDk4ODAyMjY4MTYwMA==",
+                                    authorization: "bG1aMmp2dU9pMW1ndGdrcktRQ29QbVVwVDBnUmNQdFI4THJkbE84U0tkMD1uTk5Ycm81eENxWk44aHc2ZkxYLTRqUDFIKVptVGlNOWtwWU1wVmpZSGpjemRWZ0wzUFhsJHlFQUp4KkJyI0lPOHBrYU9HJEZSQWNhKXZlaTFoeXcrMTI3NzU5NDk4ODAyMjY4MTYwMA==",
                                     "content-type": "application/json",
                                     priority: "u=1, i",
-                                    "sec-ch-ua":
-                                      '"Not)A;Brand";v="99", "Google Chrome";v="127", "Chromium";v="127"',
+                                    "sec-ch-ua": '"Not)A;Brand";v="99", "Google Chrome";v="127", "Chromium";v="127"',
                                     "sec-ch-ua-mobile": "?0",
                                     "sec-ch-ua-platform": '"Windows"',
                                     "sec-fetch-dest": "empty",
@@ -152,21 +134,18 @@ document.addEventListener("DOMContentLoaded", () => {
                                     "x-request-id": "6001cf83-1d93-4d90-9be6-3d77088870d1",
                                     Referer: "https://giftcode.vnggames.com/",
                                     "Referrer-Policy": "strict-origin-when-cross-origin",
-                                  },
+                                },
                             }
                         );
-
-                        responseOutput.value += `[*] Success: Code ${code} redeemed for ${account.roleName} - Status: ${result?.status}\n`;
+                        responseOutput.value += `[*] Success: ${account.roleName} \t-\t Status: ${result?.status}\n`;
                     } catch (error) {
-                        responseOutput.value += `[*] Error: Failed to redeem code ${code} for ${account.roleName} - Status: ${error.response?.data?.message}\n`;
+                        responseOutput.value += `[*] Error: ${account.roleName} \t-\t Status: ${error.response?.data?.message}\n`;
                     }
                 }
-
-                // Wait 2 seconds before continuing the loop
                 await delay(1000);
             }
         } catch (error) {
-            console.error("Error redeeming codes:", error);
+            console.error("Error:", error);
         }
     });
     
