@@ -18,8 +18,10 @@ document.addEventListener("DOMContentLoaded", () => {
     ];
     const mainAccRadio = document.getElementById("main-acc");
     const cloneAccRadio = document.getElementById("clone-acc");
+    const allAccRadio = document.getElementById("all-acc");
 
     let currentFilePath = "./src/acc_main.json";
+    let currentAccounts = [];
     let currentOutputIndex = 0;
 
     function delay(ms) {
@@ -94,9 +96,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function fetchAccounts() {
         try {
-            const response = await fetch(currentFilePath);
-            const accounts = await response.json();
-            populateAccountGrid(accounts);
+            if (allAccRadio.checked) {
+                // Load and combine accounts from both files
+                const mainResponse = await fetch("./src/acc_main.json");
+                const cloneResponse = await fetch("./src/acc_clone.json");
+                const mainAccounts = await mainResponse.json();
+                const cloneAccounts = await cloneResponse.json();
+                currentAccounts = [...mainAccounts, ...cloneAccounts];
+            } else {
+                const response = await fetch(currentFilePath);
+                currentAccounts = await response.json();
+            }
+            populateAccountGrid(currentAccounts);
         } catch (error) {
             console.error("Failed to load accounts:", error);
             appendToOutput(`[*] Error: Failed to load accounts from ${currentFilePath}`);
@@ -113,6 +124,12 @@ document.addEventListener("DOMContentLoaded", () => {
     cloneAccRadio.addEventListener("change", () => {
         if (cloneAccRadio.checked) {
             currentFilePath = "./src/acc_clone.json";
+            fetchAccounts();
+        }
+    });
+
+    allAccRadio.addEventListener("change", () => {
+        if (allAccRadio.checked) {
             fetchAccounts();
         }
     });
@@ -136,11 +153,8 @@ document.addEventListener("DOMContentLoaded", () => {
         clearAllOutputs();
 
         try {
-            const response = await fetch(currentFilePath);
-            const accounts = await response.json();
-
             for (const checkbox of selectedCheckboxes) {
-                const account = accounts.find(acc => acc.roleId === checkbox.value);
+                const account = currentAccounts.find(acc => acc.roleId === checkbox.value);
                 if (!account) {
                     appendToOutput(`Error: Account with ID ${checkbox.value} not found.`);
                     continue;
