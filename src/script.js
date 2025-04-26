@@ -1,11 +1,3 @@
-document.addEventListener('click', (e) => {
-    if (e.target.id === 'show-instructions') {
-        document.getElementById('instruction-popup').style.display = 'flex';
-    } else if (e.target.id === 'close-popup') {
-        document.getElementById('instruction-popup').style.display = 'none';
-    }
-});
-
 document.addEventListener("DOMContentLoaded", () => {
     const accountsGrid = document.getElementById('accounts-grid');
     const selectAllCheckbox = document.getElementById("select-all");
@@ -186,9 +178,9 @@ document.addEventListener("DOMContentLoaded", () => {
                                 },
                             }
                         );
-                        appendToOutput(`[*] Success: ${account.roleName} \t\t Response: ${result?.status}`);
+                        appendToOutput(`[*] Success: ${account.roleName.padEnd(15)} - Response: ${result?.status}`);
                     } catch (error) {
-                        appendToOutput(`[*] Error: ${account.roleName} \t\t Response: ${error.response?.data?.message}`);
+                        appendToOutput(`[*] Error:   ${account.roleName.padEnd(15)} - Response: ${error.response?.data?.message}`);
                     }
                 }
                 await delay(1000);
