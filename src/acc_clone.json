@@ -48,5 +48,55 @@
     "roleName": "Nguyên Dao",
     "level": "",
     "code": ""
+  },
+  {
+    "userId": "3038193870510235648",
+    "profileId": "30e47fcaed388981",
+    "serverId": "4022",
+    "gameCode": "934",
+    "roleId": "1316204022",
+    "roleName": "Hàn Lập",
+    "level": "",
+    "code": ""
+  },
+  {
+    "userId": "3038193870510235648",
+    "profileId": "30e47fcaed388981",
+    "serverId": "4022",
+    "gameCode": "934",
+    "roleId": "1316104022",
+    "roleName": "Tiêu Sá",
+    "level": "",
+    "code": ""
+  },
+  {
+    "userId": "3038193870510235648",
+    "profileId": "30e47fcaed388981",
+    "serverId": "4022",
+    "gameCode": "934",
+    "roleId": "1316304022",
+    "roleName": "Phong Hi",
+    "level": "",
+    "code": ""
+  },
+  {
+    "userId": "3038193870510235648",
+    "profileId": "30e47fcaed388981",
+    "serverId": "4022",
+    "gameCode": "934",
+    "roleId": "1316404022",
+    "roleName": "Mã Lương",
+    "level": "",
+    "code": ""
+  },
+  {
+    "userId": "3038193870510235648",
+    "profileId": "30e47fcaed388981",
+    "serverId": "4022",
+    "gameCode": "934",
+    "roleId": "1316504022",
+    "roleName": "Lệ Phi Vũ",
+    "level": "",
+    "code": ""
   }
 ]
