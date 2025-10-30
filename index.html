@@ -21,9 +21,23 @@
 
       <!-- Account section -->
       <div class="section">
-        <div class="account-header">
-          <label for="account-container">Danh sách tài khoản:</label>
-          <div class="radio-group">
+        <div class="toggle-container">
+          <label class="toggle-switch">
+            <input type="checkbox" id="id-input-toggle">
+            <span class="toggle-slider"></span>
+          </label>
+          <span>Nhập theo ID</span>
+        </div>
+        
+        <div id="id-input-section">
+          <label for="id-input">Nhập ID (mỗi ID cách nhau bởi dấu phẩy hoặc xuống dòng):</label>
+          <textarea id="id-input" placeholder="Nhập ID tại đây..."></textarea>
+        </div>
+
+        <div id="account-selection-section">
+          <div class="account-header">
+            <label for="account-container">Danh sách tài khoản:</label>
+            <div class="radio-group">
             <input
               type="radio"
               id="main-acc"

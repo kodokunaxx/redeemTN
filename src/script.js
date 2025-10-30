@@ -3,6 +3,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const selectAllCheckbox = document.getElementById("select-all");
   const submitCodeBtn = document.getElementById("submit-code-btn");
   const codeInput = document.getElementById("code-input");
+  const idInputToggle = document.getElementById("id-input-toggle");
+  const idInputSection = document.getElementById("id-input-section");
+  const idInput = document.getElementById("id-input");
+  const accountSelectionSection = document.getElementById(
+    "account-selection-section"
+  );
   const responseOutputs = [
     document.getElementById("response-output-1"),
     document.getElementById("response-output-2"),
@@ -136,17 +142,70 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+  // Toggle between ID input and account selection
+  idInputToggle.addEventListener("change", () => {
+    if (idInputToggle.checked) {
+      idInputSection.style.display = "block";
+      accountSelectionSection.style.display = "none";
+    } else {
+      idInputSection.style.display = "none";
+      accountSelectionSection.style.display = "block";
+    }
+  });
+
   submitCodeBtn.addEventListener("click", async () => {
     const codes = codeInput.value
       .split(/[\s,]+/)
       .map((code) => code.trim())
       .filter(Boolean);
-    const selectedCheckboxes = Array.from(
-      document.querySelectorAll(".account-checkbox:checked")
-    );
 
-    if (!codes.length || !selectedCheckboxes.length) {
-      alert("Vui lòng nhập code và chọn ít nhất một acc để nhập code.");
+    let accountsToProcess = [];
+
+    if (idInputToggle.checked) {
+      // Process IDs from textarea
+      const ids = idInput.value
+        .split(/[\s,]+/)
+        .map((id) => id.trim())
+        .filter(Boolean);
+
+      if (!ids.length) {
+        alert("Vui lòng nhập ít nhất một ID.");
+        return;
+      }
+
+      accountsToProcess = ids.map((id, index) => ({
+        userId: "",
+        profileId: "",
+        serverId: "4012",
+        gameCode: "934",
+        roleId: id,
+        roleName: "Thằng ngu " + (index + 1),
+        level: "",
+        code: "",
+      }));
+    } else {
+      // Process selected accounts
+      const selectedCheckboxes = Array.from(
+        document.querySelectorAll(".account-checkbox:checked")
+      );
+
+      if (!selectedCheckboxes.length) {
+        alert("Vui lòng chọn ít nhất một acc.");
+        return;
+      }
+
+      accountsToProcess = selectedCheckboxes
+        .map((checkbox) => {
+          const account = currentAccounts.find(
+            (acc) => acc.roleId === checkbox.value
+          );
+          return account || null;
+        })
+        .filter(Boolean);
+    }
+
+    if (!codes.length || !accountsToProcess.length) {
+      alert("Vui lòng nhập code và chọn ít nhất một acc hoặc ID để nhập code.");
       return;
     }
 
@@ -154,12 +213,9 @@ document.addEventListener("DOMContentLoaded", () => {
     clearAllOutputs();
 
     try {
-      for (const checkbox of selectedCheckboxes) {
-        const account = currentAccounts.find(
-          (acc) => acc.roleId === checkbox.value
-        );
+      for (const account of accountsToProcess) {
         if (!account) {
-          appendToOutput(`Error: Account with ID ${checkbox.value} not found.`);
+          appendToOutput(`Error: Invalid account configuration`);
           continue;
         }
 
