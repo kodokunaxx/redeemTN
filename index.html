@@ -1,56 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Code Submission Tool</title>
-    <link rel="stylesheet" href="src/style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="src/style.css" />
+  </head>
+  <body>
     <div class="container">
-        <h1>Code Submission Tool</h1>
-        <!-- Input for codes -->
-        <div class="section">
-            <label for="code-input">Nhập code tại đây:</label>
-            <textarea id="code-input" rows="2" placeholder="Nhập code, mỗi code cách nhau dấu phẩy... "></textarea>
-        </div>
+      <h1>Code Submission Tool</h1>
+      <!-- Input for codes -->
+      <div class="section">
+        <label for="code-input">Nhập code tại đây:</label>
+        <textarea
+          id="code-input"
+          rows="2"
+          placeholder="Nhập code, mỗi code cách nhau dấu phẩy... "
+        ></textarea>
+      </div>
 
-        <!-- Account section -->
-        <div class="section">
-            <div class="account-header">
-                <label for="account-container">Danh sách tài khoản:</label>
-                <div class="radio-group">
-                    <input type="radio" id="main-acc" name="account-type" value="main" checked>
-                    <label for="main-acc">Acc chính</label>
-                    <input type="radio" id="clone-acc" name="account-type" value="clone">
-                    <label for="clone-acc">Clone</label>
-                    <input type="radio" id="all-acc" name="account-type" value="all">
-                    <label for="all-acc">All</label>
-                </div>
-            </div>
-            <div class="select-all-container">
-                <input type="checkbox" id="select-all" checked>
-                <label for="select-all">Chọn tất cả</label>
-            </div>
-            <div class="accounts-scroll-container">
-                <div id="accounts-grid">
-                    <!-- Grid content will be populated by JavaScript -->
-                </div>
-            </div>
+      <!-- Account section -->
+      <div class="section">
+        <div class="account-header">
+          <label for="account-container">Danh sách tài khoản:</label>
+          <div class="radio-group">
+            <input
+              type="radio"
+              id="main-acc"
+              name="account-type"
+              value="main"
+              checked
+            />
+            <label for="main-acc">Acc chính</label>
+            <input
+              type="radio"
+              id="clone-acc"
+              name="account-type"
+              value="clone"
+            />
+            <label for="clone-acc">Clone</label>
+            <input type="radio" id="all-acc" name="account-type" value="all" />
+            <label for="all-acc">All</label>
+          </div>
         </div>
+        <div class="select-all-container">
+          <input type="checkbox" id="select-all" checked />
+          <label for="select-all">Chọn tất cả</label>
+        </div>
+        <div class="accounts-scroll-container">
+          <div id="accounts-grid">
+            <!-- Grid content will be populated by JavaScript -->
+          </div>
+        </div>
+      </div>
 
-        <!-- Submit codes -->
-        <div class="section">
-            <button id="submit-code-btn">Submit Code</button>
-            <div class="notify"><i>(*) Chú ý: Acc nào chạy mà có <b>Status: 200</b> tức là chạy thành công, acc nào khác 200 thì là <b>lỗi truy cập quá nhiều lần / code không tồn tại / code đã được nhập</b>, chi tiết xem phần log bên dưới để lựa chọn acc cần chạy lại code</i></div>
-            <div class="response-grid">
-                <textarea id="response-output-1" rows="20" readonly></textarea>
-                <textarea id="response-output-2" rows="20" readonly></textarea>
-                <textarea id="response-output-3" rows="20" readonly></textarea>
-            </div>
+      <!-- Submit codes -->
+      <div class="section">
+        <button id="submit-code-btn">Submit Code</button>
+        <div class="notify">
+          <i
+            >(*) Chú ý: Acc nào chạy mà có <b>Status: 200</b> tức là chạy thành
+            công, acc nào khác 200 thì là
+            <b
+              >lỗi truy cập quá nhiều lần / code không tồn tại / code đã được
+              nhập</b
+            >, chi tiết xem phần log bên dưới để lựa chọn acc cần chạy lại
+            code</i
+          >
         </div>
+        <div class="response-grid">
+          <textarea id="response-output-1" rows="20" readonly></textarea>
+          <textarea id="response-output-2" rows="20" readonly></textarea>
+          <textarea id="response-output-3" rows="20" readonly></textarea>
+        </div>
+      </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="src/script.js"></script>
-</body>
+  </body>
 </html>
