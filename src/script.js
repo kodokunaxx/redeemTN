@@ -17,6 +17,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const mainAccRadio = document.getElementById("main-acc");
   const cloneAccRadio = document.getElementById("clone-acc");
   const allAccRadio = document.getElementById("all-acc");
+  // Execution mode radios (sync / async)
+  const modeSyncRadio = document.getElementById("mode-sync");
+  const modeAsyncRadio = document.getElementById("mode-async");
 
   let currentFilePath = "./src/acc_main.json";
   let currentAccounts = [];
@@ -213,54 +216,94 @@ document.addEventListener("DOMContentLoaded", () => {
     clearAllOutputs();
 
     try {
-      for (const account of accountsToProcess) {
-        if (!account) {
-          appendToOutput(`Error: Invalid account configuration`);
-          continue;
-        }
+      const execMode =
+        document.querySelector('input[name="exec-mode"]:checked')?.value ||
+        "sync";
 
-        for (const code of codes) {
-          try {
-            account.code = code.toUpperCase();
-            const result = await axios.post(
-              "https://vgrapi-sea.vnggames.com/coordinator/api/v1/code/redeem",
-              account,
-              {
-                headers: {
-                  accept: "application/json, text/plain, */*",
-                  "accept-language": "vi,en-US;q=0.9,en;q=0.8",
-                  authorization:
-                    "bG1aMmp2dU9pMW1ndGdrcktRQ29QbVVwVDBnUmNQdFI4THJkbE84U0tkMD1uTk5Ycm81eENxWk44aHc2ZkxYLTRqUDFIKVptVGlNOWtwWU1wVmpZSGpjemRWZ0wzUFhsJHlFQUp4KkJyI0lPOHBrYU9HJEZSQWNhKXZlaTFoeXcrMTI3NzU5NDk4ODAyMjY4MTYwMA==",
-                  "content-type": "application/json",
-                  priority: "u=1, i",
-                  "sec-ch-ua":
-                    '"Not)A;Brand";v="99", "Google Chrome";v="127", "Chromium";v="127"',
-                  "sec-ch-ua-mobile": "?0",
-                  "sec-ch-ua-platform": '"Windows"',
-                  "sec-fetch-dest": "empty",
-                  "sec-fetch-mode": "cors",
-                  "sec-fetch-site": "same-site",
-                  "x-client-region": "VN",
-                  "x-request-id": "6001cf83-1d93-4d90-9be6-3d77088870d1",
-                  Referer: "https://giftcode.vnggames.com/",
-                  "Referrer-Policy": "strict-origin-when-cross-origin",
-                },
+      // helper values
+      const url =
+        "https://vgrapi-sea.vnggames.com/coordinator/api/v1/code/redeem";
+      const requestConfig = {
+        headers: {
+          accept: "application/json, text/plain, */*",
+          "accept-language": "vi,en-US;q=0.9,en;q=0.8",
+          authorization:
+            "bG1aMmp2dU9pMW1ndGdrcktRQ29QbVVwVDBnUmNQdFI4THJkbE84U0tkMD1uTk5Ycm81eENxWk44aHc2ZkxYLTRqUDFIKVptVGlNOWtwWU1wVmpZSGpjemRWZ0wzUFhsJHlFQUp4KkJyI0lPOHBrYU9HJEZSQWNhKXZlaTFoeXcrMTI3NzU5NDk4ODAyMjY4MTYwMA==",
+          "content-type": "application/json",
+          priority: "u=1, i",
+          "sec-ch-ua":
+            '"Not)A;Brand";v="99", "Google Chrome";v="127", "Chromium";v="127"',
+          "sec-ch-ua-mobile": "?0",
+          "sec-ch-ua-platform": '"Windows"',
+          "sec-fetch-dest": "empty",
+          "sec-fetch-mode": "cors",
+          "sec-fetch-site": "same-site",
+          "x-client-region": "VN",
+          "x-request-id": "6001cf83-1d93-4d90-9be6-3d77088870d1",
+          Referer: "https://giftcode.vnggames.com/",
+          "Referrer-Policy": "strict-origin-when-cross-origin",
+        },
+      };
+
+      if (execMode === "async") {
+        // Process all accounts concurrently, each account will process its codes sequentially
+        await Promise.all(
+          accountsToProcess.map(async (account) => {
+            if (!account) {
+              appendToOutput(`Error: Invalid account configuration`);
+              return;
+            }
+
+            for (const code of codes) {
+              try {
+                const payload = { ...account, code: code.toUpperCase() };
+                const result = await axios.post(url, payload, requestConfig);
+                appendToOutput(
+                  `[*] Success: ${account.roleName.padEnd(15)} - Response: ${
+                    result?.status
+                  }`
+                );
+              } catch (error) {
+                appendToOutput(
+                  `[*] Error:   ${account.roleName.padEnd(15)} - Response: ${
+                    error.response?.data?.message
+                  }`
+                );
               }
-            );
-            appendToOutput(
-              `[*] Success: ${account.roleName.padEnd(15)} - Response: ${
-                result?.status
-              }`
-            );
-          } catch (error) {
-            appendToOutput(
-              `[*] Error:   ${account.roleName.padEnd(15)} - Response: ${
-                error.response?.data?.message
-              }`
-            );
+              // small per-code delay inside each account to reduce burst
+              await delay(200);
+            }
+          })
+        );
+      } else {
+        // sync / existing sequential behavior
+        for (const account of accountsToProcess) {
+          if (!account) {
+            appendToOutput(`Error: Invalid account configuration`);
+            continue;
           }
+
+          for (const code of codes) {
+            try {
+              const payload = { ...account, code: code.toUpperCase() };
+              const result = await axios.post(url, payload, requestConfig);
+              appendToOutput(
+                `[*] Success: ${account.roleName.padEnd(15)} - Response: ${
+                  result?.status
+                }`
+              );
+            } catch (error) {
+              appendToOutput(
+                `[*] Error:   ${account.roleName.padEnd(15)} - Response: ${
+                  error.response?.data?.message
+                }`
+              );
+            }
+          }
+
+          // keep the 1s delay between accounts in sync mode (original behavior)
+          await delay(1000);
         }
-        await delay(1000);
       }
     } catch (error) {
       console.error("Error:", error);
