@@ -27,14 +27,21 @@
             <span class="toggle-slider"></span>
           </label>
           <span>Nhập theo ID</span>
+          <span class="control-sep">|</span>
           <!-- Execution mode radios placed next to the toggle -->
-          <div style="margin-left:12px; display:flex; align-items:center; gap:8px;">
+          <div style="margin-left:4px; display:flex; align-items:center; gap:8px;">
             <span style="font-size:13px; color:#666;">Chế độ:</span>
             <div class="radio-group" style="margin: 0;">
               <input type="radio" id="mode-sync" name="exec-mode" value="sync" checked>
               <label for="mode-sync">Sync</label>
               <input type="radio" id="mode-async" name="exec-mode" value="async">
               <label for="mode-async">Async</label>
+            </div>
+            <span class="control-sep">|</span>
+            <!-- Delay input (ms) -->
+            <div style="display:flex; align-items:center; gap:8px; margin-left:4px;">
+              <label for="code-delay" style="font-size:12px; color:#666; margin:0;">Delay (ms)</label>
+              <input id="code-delay" type="number" min="0" step="50" value="1000" style="width:90px; padding:4px; border-radius:4px; border:1px solid #ccc; font-size:12px;" />
             </div>
           </div>
         </div>

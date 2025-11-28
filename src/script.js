@@ -20,6 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Execution mode radios (sync / async)
   const modeSyncRadio = document.getElementById("mode-sync");
   const modeAsyncRadio = document.getElementById("mode-async");
+  const codeDelayInput = document.getElementById("code-delay");
 
   let currentFilePath = "./src/acc_main.json";
   let currentAccounts = [];
@@ -220,6 +221,10 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelector('input[name="exec-mode"]:checked')?.value ||
         "sync";
 
+      // read per-code delay (ms) from UI (default 1000ms) and validate
+      let perCodeDelay = parseInt(codeDelayInput?.value, 10);
+      if (Number.isNaN(perCodeDelay) || perCodeDelay < 0) perCodeDelay = 1000;
+
       // helper values
       const url =
         "https://vgrapi-sea.vnggames.com/coordinator/api/v1/code/redeem";
@@ -271,7 +276,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 );
               }
               // small per-code delay inside each account to reduce burst
-              await delay(200);
+              await delay(perCodeDelay);
             }
           })
         );
@@ -301,7 +306,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
           }
 
-          // keep the 1s delay between accounts in sync mode (original behavior)
+          // keep a short delay between accounts in sync mode (original behavior)
           await delay(1000);
         }
       }

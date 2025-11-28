@@ -5,6 +5,13 @@
     margin-bottom: 10px;
 }
 
+.control-sep {
+    color: #bbb;
+    margin: 0 8px;
+    user-select: none;
+    font-weight: 600;
+}
+
 .toggle-switch {
     position: relative;
     display: inline-block;
